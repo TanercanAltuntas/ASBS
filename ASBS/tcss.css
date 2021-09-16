@@ -1,0 +1,333 @@
+.ui-inplace-save {
+	width: 15px !important;
+	height: 18px !important;
+}
+
+.ui-inplace-cancel {
+	width: 15px !important;
+	height: 18px !important;
+}
+
+.backgroundcolorTaner {
+	color: black;
+	background: white;
+}
+
+.ui-autocomplete.ui-autocomplete-dropdown{
+	position: absolute!important;
+    height: 100%!important;
+    right: -24px!important;
+    top: 0px!important;
+}
+
+.xxxyyy {
+	background-color: white;
+	text-align: left;
+}
+
+.form-groupTaner {
+	margin-bottom: 16px;
+}
+
+.marginPaddingTaner {
+	margin-bottom: 8px;
+}
+
+.solayaslaTaner {
+	text-align: left;
+}
+
+.paragraph {
+	width: 42%;
+	float: left;
+}
+
+.clearfix {
+	clear: both
+}
+
+.ui-inplace-display {
+	display: none;
+	background: white !important; 
+}
+
+.baslýktaner {
+	font-family: 'Source Sans Pro', sans-serif;
+	font-size: large !important;
+	padding-right: 15px;
+}
+
+.d-flexTaner {
+	display: -ms-flexbox !important;
+	display: flex !important;
+}
+
+.formControlTaner {
+	display: block;
+	width: 100%;
+	height: calc(2.25rem + 2px);
+	padding: 0.375rem 0.75rem;
+	font-size: 1rem;
+	line-height: 1.5;
+	color: #495057;
+	background-color: #fff;
+	background-clip: padding-box;
+	border: 1px solid #ced4da;
+	border-radius: 0.25rem;
+	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.accordion-panelFor {
+	color: white;
+	background-color: white;
+	border-color: white;
+}
+
+.baslýkhead {
+	font-size: smaller;
+	font-weight: bold;
+	display: flex;
+	justify-content: center;
+	font-size: small;
+}
+
+.container {
+	margin-left: 2cm;
+	display: inline-flex;
+	justify-content: flex-start;
+	flex-direction: row;
+	
+	/*
+	width: 100%;
+	padding-right: 15px;
+	padding-left: 15px;
+	margin-right: auto;
+	margin-left: auto;
+	*/
+}
+
+.ui-inplace-content {
+	display: flex;
+}
+
+.ui-inplace-editor {
+	display: flex;
+}
+
+
+/*
+.aasffa,
+.xpadLeft
+.ui-inplace-editor{
+	padding-left: 23.5 px!important;
+}
+*/
+
+.ui-icon-triangle-1-s {
+	color: black!important;
+}
+
+.ui-button-icon-left.ui-icon.ui-c.ui-icon-triangle-1-s{
+	color:white!important;
+}
+
+/* .ui-inputtext { */
+/* 	width: auto!important; */
+/* } */
+
+.ui-selectonemenu.ui-widget.ui-state-default.ui-corner-all{
+	border: none;
+    border-style: none;
+    width: 170px!important;
+}
+
+/* .ui-inputfield.ui-widget.ui-state-default.ui-corner-all.hasDatepicker{ */
+/* 	width: 170px!important; */
+/* } */
+
+/* .ui-inplace-editor.xleft22{ */
+	
+/*     position: relative; */
+/*     vertical-align: middle; */
+/*     left: 22px; */
+	
+/* } */
+
+.ui-selectonemenu-label.ui-inputfield.ui-corner-all{
+	width: 170px!important;
+}
+
+/* .ui-autocomplete-input.ui-autocomplete-dd-input.ui-inputfield.ui-widget.ui-state-default.ui-corner-left.backGroundWhite{ */
+/* 	width: 170px!important; */
+/* } */
+
+/* .ui-autocomplete-input.ui-autocomplete-dd-input.ui-inputfield.ui-widget.ui-state-default.ui-corner-left.backGroundWhite.ui-state-hover{ */
+/* 	width: 170px!important; */
+/* } */
+
+.ui-autocomplete-input.ui-autocomplete-dd-input.ui-inputfield.ui-widget.ui-state-default.ui-corner-left{
+	width: 171px;
+}
+
+.ui-inputfield.ui-widget.ui-state-default.ui-corner-all.hasDatepicker.ui-state-hover{
+	width: inherit;
+}
+.ui-inputfield.ui-widget.ui-state-default.ui-corner-all.hasDatepicker{
+	width: inherit;
+}
+
+.ui-autocomplete-input.ui-autocomplete-dd-input.ui-inputfield.ui-widget.ui-state-default.ui-corner-left.backGroundWhite.ui-state-hover{
+	width: inherit;
+}
+
+.ui-inputfield.ui-inputtext.ui-widget.ui-state-default.ui-corner-all.kimlikSorgulaInput.transformUpperCase.generalHide{
+	width: auto;
+}
+
+.ui-accordion-header.ui-helper-reset.ui-state-default.ui-corner-all {
+	width: fit-content !important;
+	border: none !important;
+	color: #007bff;
+	background: white!important;
+}
+
+.ui-accordion-header.ui-helper-reset.ui-state-default.ui-corner-all.ui-state-hover
+	{
+	width: fit-content !important;
+	border: none !important;
+	color: #007bff;
+}
+
+.ui-accordion-header.ui-helper-reset.ui-state-default.ui-state-active.ui-corner-top{
+	width: fit-content !important;
+	color : #007bff!important;
+	background: white !important;
+	border: none!important;
+	color: #39a3f4;
+}
+
+.ui-accordion-header.ui-helper-reset.ui-state-default.ui-corner-all.ui-state-hover{
+	background: white!important;
+	background-color: white!important;
+}
+
+.ui-inplace-display.ui-state-highlight{
+	color: black!important;
+}
+
+.ui-autocomplete-input.ui-autocomplete-dd-input.ui-inputfield.ui-widget.ui-state-default.ui-corner-left.backGroundWhite{
+	width: inherit;
+}
+
+
+
+/* .ui-inputfield.ui-widget.ui-state-default.ui-corner-all.hasDatepicker.ui-state-hover{ */
+/* 	min-width: -webkit-fill-available; */
+/* } */
+
+/* .ui-inputfield.ui-inputtext.ui-widget.ui-state-default.ui-corner-all.backGroundWhite.ui-state-hover{ */
+/* 	min-width: -webkit-fill-available; */
+/* } */
+
+/* .ui-inputfield.ui-inputtext.ui-widget.ui-state-default.ui-corner-all.backGroundWhite{ */
+/* 	min-width: -webkit-fill-available; */
+/* } */
+
+/* .ui-inputfield.ui-widget.ui-state-default.ui-corner-all.hasDatepicker{ */
+/* 	width: fit-content; */
+/* }	 */
+/* .ui-inputfield.ui-widget.ui-state-default.ui-corner-all.hasDatepicker.ui-state-hover{ */
+/* 	width: fit-content; */
+/* } */
+
+/* .ui-inputfield.ui-widget.ui-state-default.ui-corner-all.hasDatepicker.ui-state-hover.ui-state-focus{ */
+/* 	width: fit-content; */
+/* } */
+
+.ui-dialog-content.ui-widget-content{
+	height: auto!important;
+    margin: 10px!important;
+    width: auto!important;
+}
+
+.ui-datatable.ui-widget.ui-datatable-resizable.ui-datatable-reflow{
+	margin-top: 10px!important;
+}
+
+.ui-dialog-titlebar.ui-widget-header.ui-helper-clearfix.ui-corner-top.ui-draggable-handle{
+	height: 50px!important;
+}
+
+/* .ui-inplace .ui-inplace-editor .abcde{ */
+/* 	margin-left: 23.5px!important; */
+/* } */
+
+.ui-selectonemenu-item,
+.autocompleteSiyahYazý,
+.ui-selectonemenu-list-item,
+.ui-corner-all,
+.ui-state-highlight{
+	color: black;
+}
+
+
+.ui-state-highlight,
+.xdenemex
+.ui-inplace-display{
+	color:red!important;
+}
+
+.ui-widget
+.boldForLabelTitle
+.ui-outputlabel{
+	font-weight: bold!important;
+    font-family: sans-serif!important;
+    font-size: small!important;
+    border: none!important;
+    color: black!important;
+    background: white!important;
+    display: flex!important;
+}
+
+
+.kimlikbilgileriBaslik {
+	text-decoration: underline;
+	margin-top: 5px;
+	margin-left: 175px;
+	margin-top: 10px;
+	display: grid;
+	width: 150px;
+	position: absolute
+}
+
+.titlesicil {
+	font-family: 'Source Sans Pro', sans-serif;
+	font-size: large !important;
+	padding-right: 15px;
+	display: flex;
+	justify-content: center;
+	padding-top: 15px;
+}
+
+.title2sicil {
+	display: flex;
+	justify-content: center;
+	font-weight: bold;
+	font-family: 'Source Sans Pro', sans-serif;
+	font-size: large !important; 
+	padding-right: 15px;
+}
+
+.ui-accordion-content.ui-helper-reset.ui-widget-content{
+	border: none!important;
+}
+
+.ustu-cizili-degil {
+	
+	text-decoration-color: black;
+}
+
+.ustu-cizili {
+	text-decoration: line-through;
+	text-decoration-color: red;
+}

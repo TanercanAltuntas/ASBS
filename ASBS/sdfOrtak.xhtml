@@ -1,0 +1,1284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:tpGenel="http://java.sun.com/jsf/composite/compositeComponents/genel"
+	template="/WEB-INF/layout.xhtml">
+	<ui:define name="title">Sdf Ortak</ui:define>
+	<ui:define name="content">
+
+
+		<script type="text/javascript">  
+			
+		
+			function openSidebar(sidebarId){
+				
+				pushMainContent();
+				closeOtherTabs(sidebarId);
+				
+			}
+			
+			function pushMainContent(){
+				
+				document.getElementById('contentPart').style.width= '68%';		
+				document.getElementById('contentPart').style.marginLeft= '32%';			
+				document.getElementById('contentPart').style.cssFloat= '';
+				document.getElementById('sideBarWithButtons').style.width= '32%';		
+				document.getElementById('butonlar').style.width = '10%';
+				document.getElementById('sidebars').style.width= '90%';
+				document.getElementById('sidebars').style.display = 'block';
+				
+			}
+			
+
+			function pushLeftMainContent(){
+				var element = document.getElementById('contentPart');
+				document.getElementById('contentPart').style.width= '96%';
+				document.getElementById('contentPart').style.marginLeft= '0';
+				document.getElementById('contentPart').style.cssFloat='left';			
+				document.getElementById('sideBarWithButtons').style.width= '4%';	
+				document.getElementById('butonlar').style.width = '100%';		
+				document.getElementById('sidebars').style.width= '0';			
+				document.getElementById('sidebars').style.display = 'none';
+				
+			}
+			
+			function hideText(id){
+				document.getElementById(id).classList.add('hideText');
+			}
+			
+			function disableModal(sidebarModalId){
+				
+				var sidebarModal = document.getElementById(sidebarModalId);
+				
+				console.log( sidebarModal);
+				
+				sidebarModal.classList.remove('ui-widget-overlay');
+				sidebarModal.classList.remove('ui-dialog-mask'); 
+				
+			}
+			
+			function closeOtherTabs(id){
+				
+				const sidebarids = ["notlarSideBar", "ebysSideBar","mernisSideBar",
+					"uyapSideBar","belgelerSideBar","katipIslemleriSideBar","komisyonRaporuSideBar","tetkikRaporuSideBar"];
+				
+				for(const element of sidebarids){
+					if(element!== id){
+						let sidebarElement = document.getElementById(element);
+						
+						if(sidebarElement.classList.contains("ui-sidebar-active")){
+							sidebarElement.classList.remove("ui-sidebar-active");
+						}			
+					}
+				}
+				
+			}
+
+
+		</script>
+
+
+		<div id="sideBarWithButtons"
+			style="position: relative; display: inline-block; width: 4%; float: left; background-color: white;">
+			<h:form>
+				<div id="butonlar" class="sideBarButtons"
+					style="float: left; margin-top: 40px; width: 100%;">
+
+					<div class="rotation-wrapper-outer">
+						<div class="rotation-wrapper-inner">
+							<p:commandButton value="NOTLAR"
+								action="#{sdfNotJsfController.sdfSolNotlarGetir}"
+								styleClass="element-to-rotate"
+								oncomplete="PF('notlar').show(); openSidebar('notlarSideBar')"
+								update="sdfNotlarForm" />
+						</div>
+					</div>
+
+					<div class="rotation-wrapper-outer">
+						<div class="rotation-wrapper-inner">
+							<p:commandButton value="EBYS" styleClass="element-to-rotate"
+								oncomplete="PF('ebys').show(); openSidebar('ebysSideBar')" />
+						</div>
+					</div>
+
+					<div class="rotation-wrapper-outer">
+						<div class="rotation-wrapper-inner">
+							<p:commandButton value="MERNIS" styleClass="element-to-rotate"
+								oncomplete="PF('mernis').show(); openSidebar('mernisSideBar')" />
+						</div>
+					</div>
+
+					<div class="rotation-wrapper-outer">
+						<div class="rotation-wrapper-inner">
+							<p:commandButton value="UYAP" styleClass="element-to-rotate"
+								oncomplete="PF('uyap').show(); openSidebar('uyapSideBar')" />
+						</div>
+					</div>
+
+					<div class="rotation-wrapper-outer">
+						<div class="rotation-wrapper-inner">
+							<p:commandButton value="Belgeler" styleClass="element-to-rotate"
+								oncomplete="PF('belgeler').show(); openSidebar('belgelerSideBar')" />
+						</div>
+					</div>
+
+					<div class="rotation-wrapper-outer">
+						<div class="rotation-wrapper-inner">
+							<p:commandButton value="Katip İşlemleri"
+								styleClass="element-to-rotate"
+								oncomplete="PF('katipIslemleri').show(); openSidebar('katipIslemleriSideBar')" />
+						</div>
+					</div>
+
+					<div class="rotation-wrapper-outer">
+						<div class="rotation-wrapper-inner">
+							<p:commandButton value="Komisyon Raporu"
+								styleClass="element-to-rotate"
+								oncomplete="PF('komisyonRaporu').show(); openSidebar('komisyonRaporuSideBar'); " />
+						</div>
+					</div>
+
+					<div class="rotation-wrapper-outer">
+						<div class="rotation-wrapper-inner">
+							<p:commandButton value="Tetkik Raporu"
+								styleClass="ui-button-flat element-to-rotate"
+								oncomplete="PF('tetkikRaporu').show(); openSidebar('tetkikRaporuSideBar')">
+							</p:commandButton>
+						</div>
+					</div>
+				</div>
+			</h:form>
+
+			<div id="sidebars" style="width: 0%; display: none">
+
+				<p:sidebar id="notlarSideBar" widgetVar="notlar"
+					onHide="pushLeftMainContent()" position="left" styleClass="sideBar">
+					<h:form id="sdfNotlarForm">
+
+						<p:inputTextarea id="sdfNotlarTextArea" rows="10" cols="30"
+							autoResize="false" placeHolder="Not Giriniz"
+							styleClass="sdfNotlarTextArea textBoxResizeVertically"
+							value="#{sdfNotJsfController.eklenecekNot.metin}" />
+
+						<div style="width: 100%; overflow: hidden;">
+							<p:commandButton action="#{sdfNotJsfController.sdfSolNotKaydet}"
+								value="Kaydet" update="sdfNotlarForm" process="@form"
+								style="width:80px; height:40px; float:right; border-radius:.25rem; margin-top:10px">
+							</p:commandButton>
+						</div>
+
+						<div style="margin-top: 20px">
+
+							<p:repeat var="sdfNot"
+								value="#{sdfNotJsfController.soldakiNotlar}" varStatus="status">
+								<p:panelGrid id="solNotPanel" style="overflow-x:auto;"
+									styleClass="ui-noborder">
+									<p:row>
+										<p:column>
+											<h:outputText value="#{sdfNot.tarih_saat}">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</p:column>
+										<p:column>
+											<h:outputText value="#{sdfNot.tarih_saat}">
+												<f:convertDateTime pattern="HH:mm" />
+											</h:outputText>
+										</p:column>
+										<p:column>
+											<h:outputText value="#{sdfNot.kullanici_id.adSoyad}"></h:outputText>
+										</p:column>
+
+										<p:column style="padding-right:0; padding-left:0 !important">
+
+											<p:commandButton
+												style="width:fit-content;margin: 0 auto; display:inline"
+												value="Güncelle" id="solNotGuncelleButon"
+												action="#{sdfNotJsfController.notGuncellemeStateDegistir(sdfNot.id,false 	)}"
+												update="sdfNotlarForm" rendered="#{!sdfNot.guncelleniyor}">
+											</p:commandButton>
+
+											<p:commandButton
+												style="width:fit-content;margin: 0 auto; display:inline"
+												action="#{sdfNotJsfController.solNotGuncelle(sdfNot.id,sdfNot.metin)}"
+												rendered="#{sdfNot.guncelleniyor}" value="Onayla"
+												update="sdfNotlarForm">
+											</p:commandButton>
+
+
+										</p:column>
+
+										<p:column style="padding-right:0; padding-left:0 !important">
+
+											<p:commandButton
+												style="width:fit-content;margin: 0 auto; display:inline"
+												action="#{sdfNotJsfController.solNotSil(sdfNot.id)}"
+												rendered="#{!sdfNot.guncelleniyor}" value="Sil"
+												update="sdfNotlarForm">
+											</p:commandButton>
+
+											<p:commandButton type="cancel"
+												style="width:fit-content;margin: 0 auto; display:inline"
+												action="#{sdfNotJsfController.notGuncellemeStateDegistir(sdfNot.id,true)}"
+												rendered="#{sdfNot.guncelleniyor}" value="Iptal"
+												update="sdfNotlarForm">
+											</p:commandButton>
+
+										</p:column>
+
+									</p:row>
+
+									<p:row>
+										<p:column colspan="5">
+											<h:outputText id="notOutText" value="#{sdfNot.metin}"
+												rendered="#{!sdfNot.guncelleniyor}" styleClass="koyu"></h:outputText>
+											<h:inputTextarea id="inputText" rows="6" cols="30"
+												rendered="#{sdfNot.guncelleniyor}" value="#{sdfNot.metin}"
+												styleClass="textBoxResizeVertically sdfNotlarTextArea"></h:inputTextarea>
+
+										</p:column>
+									</p:row>
+								</p:panelGrid>
+								<hr style="color: grey"></hr>
+							</p:repeat>
+
+						</div>
+					</h:form>
+
+				</p:sidebar>
+
+				<p:sidebar id="ebysSideBar" widgetVar="ebys"
+					onHide="pushLeftMainContent()" position="left" styleClass="sideBar">
+					
+				</p:sidebar>
+
+				<p:sidebar id="mernisSideBar" widgetVar="mernis"
+					onHide="pushLeftMainContent()" position="left" styleClass="sideBar">
+
+					<h:form id="mernisForm">
+
+
+						<!-- 		   						 <p:outputLabel for="mernisUyruk"  value="Uyruk" style="float:left; clear:both"></p:outputLabel> -->
+						<!-- 			   					<p:autoComplete id="mernisUyruk" style="float:right"></p:autoComplete> -->
+
+
+
+						<!-- 	   							<p:outputLabel for="mernisTCKN" value="TCKN" style="float:left; clear:both"></p:outputLabel> -->
+						<!-- 		   						<p:autoComplete id="mernisTCKN" style="float:right"></p:autoComplete> -->
+
+
+
+						<!-- 	   							<p:outputLabel for="mernisSoyad"  value="Soyad" style="float:left; clear:both"></p:outputLabel> -->
+						<!-- 		   						<p:autoComplete id="mernisSoyad" style="float:right"></p:autoComplete>	   					 -->
+
+
+
+						<!-- 	   							<p:outputLabel for="mernisAd"  value="Ad" style="float:left; clear:both"></p:outputLabel> -->
+						<!-- 		   						<p:autoComplete id="mernisAd" style="float:right"></p:autoComplete> -->
+
+
+
+						<!-- 	   							<p:outputLabel for="mernisCinsiyet"  value="Cinsiyet" style="float:left; clear:both" ></p:outputLabel> -->
+						<!-- 		   						<p:autoComplete id="mernisCinsiyet" style="float:right" ></p:autoComplete> -->
+
+
+
+
+						<!-- 	   							<p:outputLabel for="@next"  value="Ana Adı" style="float:left; clear:both"></p:outputLabel> -->
+						<!-- 		   						<p:autoComplete id="mernisAnaAdi" style="float:right"></p:autoComplete> -->
+
+
+
+						<!-- 	   							<p:outputLabel for="@next"  value="Baba Adı" style="float:left; clear:both"></p:outputLabel> -->
+						<!-- 		   						<p:autoComplete id="mernisBabaAdi" style="float:right"></p:autoComplete> -->
+
+
+
+						<!-- 	   							<p:outputLabel for="@next"  value="Doğum Tarihi" style="float:left; clear:both"></p:outputLabel> -->
+						<!-- 		   						<p:autoComplete id="mernisDogumTarihi" style="float:right"></p:autoComplete> -->
+
+
+
+						<!-- 	   							<p:outputLabel for="@next" value="Doğum Yeri" style="float:left; clear:both"></p:outputLabel> -->
+						<!-- 		   						<p:autoComplete id="mernisDogumYeri" style="float:right"></p:autoComplete> -->
+
+
+
+						<!-- 	   							<p:outputLabel for="@next"  value="Nüfusa Kayıtlı İl" style="float:left; clear:both"></p:outputLabel> -->
+						<!-- 		   						<p:autoComplete id="mernisIl" style="float:right"></p:autoComplete> -->
+
+
+
+						<!-- 	   							<p:outputLabel for="@next"  value="Nüfusa Kayıtlı İlçe" style="float:left; clear:both"></p:outputLabel> -->
+						<!-- 		   						<p:autoComplete id="mernisIlce" style="float:right"></p:autoComplete>	 -->
+
+
+
+						<!-- 	   							<p:outputLabel for="@next"  value="Bucak/Köy/ Mahalle" style="float:left; clear:both" ></p:outputLabel> -->
+						<!-- 		   						<p:autoComplete id="mernisMahalle" style="float:right"></p:autoComplete> -->
+						<p:panelGrid columns="2" columnClasses="ui-g-3, ui-g-9"
+							styleClass="ui-noborder" style="margin-top:20px; width:100%">
+
+
+							<p:outputLabel for="mernisUyruk" value="Uyruk"></p:outputLabel>
+							<p:autoComplete id="mernisUyruk" style="width:100%"
+								inputStyle="width:100%"
+								value="#{sdfJsfController.kimlikDto.ulke_id}"
+								completeMethod="#{ulkeController.autoComplete}"
+						        var="ulke" itemLabel="#{ulke.ad}" itemValue="#{ulke}" 
+						        converter="#{selectItemsConverter}" forceSelection="true"
+						        required="false"
+						        dropdown="true"
+								
+								></p:autoComplete>
+
+
+							<p:outputLabel for="mernisTCKN" value="TCKN"></p:outputLabel>
+							<p:autoComplete id="mernisTCKN" style="width:100%"
+								inputStyle="width:100%"
+								value="#{sdfJsfController.kimlikDto.kimlik_no}"></p:autoComplete>
+
+
+
+							<p:outputLabel for="mernisSoyad" value="Soyad"></p:outputLabel>
+							<p:autoComplete id="mernisSoyad" style="width:100%"
+								inputStyle="width:100%"
+								value="#{sdfJsfController.kimlikDto.soyad}"></p:autoComplete>
+
+
+
+							<p:outputLabel for="mernisAd" value="Ad"></p:outputLabel>
+							<p:autoComplete id="mernisAd" style="width:100%"
+								inputStyle="width:100%" value="#{sdfJsfController.kimlikDto.ad}"></p:autoComplete>
+
+
+
+							<p:outputLabel value="Cinsiyet"></p:outputLabel>
+							<tpGenel:radioComponent id="cinsiyetMernis"
+								value="#{sdfJsfController.kimlikDto.cinsiyet}"
+								store="#{storeController.cinsiyetStore}" listItem="c"
+								required="false" itemLabel="#{cinsiyet}" itemValue="#{cinsiyet}" />
+
+							<p:outputLabel for="@next" value="Ana Adı"></p:outputLabel>
+							<p:autoComplete id="mernisAnaAdi" style="width:100%"
+								inputStyle="width:100%"
+								value="#{sdfJsfController.kimlikDto.ana_adi}"></p:autoComplete>
+
+
+
+							<p:outputLabel for="@next" value="Baba Adı"></p:outputLabel>
+							<p:autoComplete id="mernisBabaAdi" style="width:100%"
+								inputStyle="width:100%"
+								value="#{sdfJsfController.kimlikDto.baba_adi}"></p:autoComplete>
+
+
+
+							<p:outputLabel for="@next" value="Doğum Tarihi"></p:outputLabel>
+							<p:panelGrid columns="3"
+								columnClasses="ui-g-4 zeroPadding,ui-g-4 zeroPadding,ui-g-4 zeroPadding">
+								<p:autoComplete id="mernisDogumTarihiGun"
+									style="width:100%;padding-left: 0" inputStyle="width:100%;"
+									value="#{sdfJsfController.kimlikDto.dogum_gunu}"></p:autoComplete>
+								<p:autoComplete id="mernisDogumTarihiAy" style="width:100%;"
+									inputStyle="width:100%;"
+									value="#{sdfJsfController.kimlikDto.dogum_ayi}"></p:autoComplete>
+								<p:autoComplete id="mernisDogumTarihiYil" style="width:100%;"
+									inputStyle="width:100%;"
+									value="#{sdfJsfController.kimlikDto.dogum_yili}"></p:autoComplete>
+							</p:panelGrid>
+
+
+							<p:outputLabel for="@next" value="Doğum Yeri"></p:outputLabel>
+							<p:autoComplete id="mernisDogumYeri" style="width:100%"
+								inputStyle="width:100%"
+								value="#{sdfJsfController.kimlikDto.dogum_yeri}"></p:autoComplete>
+
+
+
+							<p:outputLabel for="mernisIl" value="Nüfusa Kayıtlı İl"></p:outputLabel>
+							<p:autoComplete id="mernisIl" style="width:100%"
+								inputStyle="width:100%"
+								value="#{sdfJsfController.kimlikDto.nufusa_kayitli_ilce_id.il_id}"
+								completeMethod="#{ilController.autoComplete}" var="il"
+								itemValue="#{il}" itemLabel="#{il.ad}"
+								converter="#{selectItemsConverter}" forceSelection="true"
+								dropdown="true">
+								<p:ajax event="itemSelect" listener="#{sdfJsfController.onItemSecilenListener}" update="mernisForm:mernisIlce" />
+								<p:ajax event="change" listener="#{sdfJsfController.onItemSecilenListener}" update="mernisForm:mernisIlce" />
+								
+								 </p:autoComplete>
+
+
+
+							<p:outputLabel for="mernisIlce" value="Nüfusa Kayıtlı İlçe"></p:outputLabel>
+							<p:autoComplete id="mernisIlce" style="width:100%"
+								inputStyle="width:100%"
+								value="#{sdfJsfController.kimlikDto.nufusa_kayitli_ilce_id}"
+											completeMethod="#{ilceController.ilceleriGetir}" var="ilce"
+											itemLabel="#{ilce.ad}" itemValue="#{ilce}"
+											converter="#{selectItemsConverter}" forceSelection="true"
+											dropdown="true" 
+											placeholder="#{labels.seciniz}"
+											>
+								<f:attribute name="filter" value="#{sdfJsfController.kimlikDto.nufusa_kayitli_ilce_id.il_id}" />
+							</p:autoComplete>
+
+
+
+							<p:outputLabel for="@next" value="Bucak/Köy/ Mahalle"></p:outputLabel>
+							<p:autoComplete placeholder="Bucak/Köy/ Mahalle"
+								id="mernisMahalle" style="width:100%" inputStyle="width:100%"
+								value="#{sdfJsfController.kimlikDto.mahalle}"></p:autoComplete>
+
+						</p:panelGrid>
+
+						<p:commandButton value="Sorgula"
+							style="width:100px; float:right; margin-top:10px"></p:commandButton>
+					</h:form>
+				</p:sidebar>
+
+				<p:sidebar id="uyapSideBar" widgetVar="uyap"
+					onHide="pushLeftMainContent()" position="left" styleClass="sideBar">
+					
+
+				</p:sidebar>
+
+				<p:sidebar id="belgelerSideBar" widgetVar="belgeler"
+					onHide="pushLeftMainContent()" position="left" styleClass="sideBar">
+					
+
+				</p:sidebar>
+
+				<p:sidebar id="katipIslemleriSideBar" widgetVar="katipIslemleri"
+					onHide="pushLeftMainContent()" position="left" styleClass="sideBar">
+					
+
+				</p:sidebar>
+
+				<p:sidebar id="komisyonRaporuSideBar" widgetVar="komisyonRaporu"
+					onHide="pushLeftMainContent()" position="left" styleClass="sideBar">
+		
+
+				</p:sidebar>
+
+				<p:sidebar id="tetkikRaporuSideBar" widgetVar="tetkikRaporu"
+					onHide="pushLeftMainContent()" position="left" styleClass="sideBar">
+				</p:sidebar>
+			</div>
+
+		</div>
+
+		<div id="contentPart"
+			style="width: 96%; float: left; background-color: white;">
+			<h1 class="titlesicil">
+				<strong> <h:outputText
+						value="Sicil Değerlendirme Talep Formu" />
+				</strong>
+			</h1>
+
+			<div>
+				<p:commandLink value="Kimlik Düzeltme Kayıtları "
+					id="kimlikDuzeltmeModalLabel" onclick="PF('sample').show();"
+					styleClass="p-text-bold paragraph clearfix"
+					style="text-decoration:underline; margin-top: 5px; margin-left: 175px; margin-top: 10px; position: absolute;">
+				</p:commandLink>
+
+				<p:dialog header="Kimlik Düzeltme Kayıtları"
+					styleClass="ui-dialog modal-header ui-draggable-handle"
+					id="kimlikDuzeltmeKaydiSorguForm" style="background-color:white;"
+					widgetVar="sample" modal="true" width="1485" height="500">
+					<h:form>
+						<p:panel
+							header="#{labels.kimlikDuzeltmeKaydi_bilgilerini_giriniz}">
+							<p:outputPanel id="kimlikDuzeltmeKaydiDetail">
+								<p:panelGrid columns="4"
+									columnClasses="ui-g-12 ui-md-2,ui-g-12 ui-md-4,ui-g-12 ui-md-2,ui-g-12 ui-md-4"
+									layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+									<h:outputLabel style="font-weight: bold;" for="ip"
+										value="#{labels.ip}" />
+									<p:inputText placeholder="#{labels.ip}"
+										styleClass="backGroundWhite"
+										value="#{kimlikDuzeltmeKaydiController.kimlikOzelLogSorguKriteri.ip}"
+										id="ip" />
+
+									<h:outputLabel style="font-weight: bold;" for="tarih_saat"
+										value="#{labels.tarih_saat}" />
+									<p:calendar id="tarih_saat" showOn="button"
+										styleClass="backGroundWhite buyukHarf "
+										converter="toUpperCaseConverter"
+										placeholder="#{labels.tarih_saat}"
+										value="#{kimlikDuzeltmeKaydiController.kimlikOzelLogSorguKriteri.tarih_saat}" />
+
+									<h:outputLabel style="font-weight: bold;" for="aciklama_karar"
+										value="#{labels.aciklama_karar}" />
+									<p:inputText placeholder="#{labels.aciklama_karar}"
+										styleClass="backGroundWhite"
+										value="#{kimlikDuzeltmeKaydiController.kimlikOzelLogSorguKriteri.aciklama_karar}"
+										id="aciklama_karar" />
+
+									<h:outputLabel style="font-weight: bold;"
+										value="#{labels.kullanici_id}" />
+									<tpGenel:autoCompleteComponent id="kullanici_id"
+										value="#{kimlikDuzeltmeKaydiController.kimlikOzelLogSorguKriteri.kullanici_id}"
+										method="#{kullaniciController.autoComplete}"
+										listItem="kullanici" listItemValue="#{kullanici}"
+										listItemLabel="#{kullanici.adSoyad}"
+										style="position: relative;" inputStyleClass="backGroundWhite" />
+								</p:panelGrid>
+							</p:outputPanel>
+
+							<p:commandButton id="sorgula" value="#{labels.sorgula}"
+								action="#{kimlikDuzeltmeKaydiController.sorgula}"
+								icon="fa fa-search" style="margin-top: 10px;" />
+							<!-- update="" -->
+
+							<p:commandButton id="temizle" value="#{labels.temizle}"
+								action="#{kimlikDuzeltmeKaydiController.formTemizle}"
+								update="kimlikDuzeltmeKaydiSorguForm" immediate="true"
+								onclick="datatableVar.unselectAllRows();"
+								icon="fa fa-eject fa-rotate-180">
+							</p:commandButton>
+						</p:panel>
+					</h:form>
+
+					<h:form>
+
+						<p:panel
+							header="#{labels.kimlikDuzeltmeKaydi_bilgilerini_giriniz}"
+							style="margin-top:10px;">
+							<p:outputPanel id="outpanelButtonKR">
+								<p:commandButton id="geri" icon="fa fa-angle-left"
+									value="#{labels.geri}" style="margin-top:10px;"
+									action="#{kimlikDuzeltmeKaydiController.geri}" update="" />
+								<!--update kısmında sorun var! -->
+							</p:outputPanel>
+
+							<p:dataTable id="kimlikDuzeltmeKaydiList"
+								var="kimlikDuzeltmeKaydi"
+								value="#{kimlikDuzeltmeKaydiController.kimlikOzelLogListesi}"
+								rowKey="#{kimlikDuzeltmeKaydi.id}" disabledSelection="true"
+								rows="10" paginator="true" paginatorPosition="bottom"
+								paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+								currentPageReportTemplate="#{labels.toplam_kayit_sayisi} #{kimlikDuzeltmeKaydiController.kimlikOzelLogListesi.size()}"
+								rowsPerPageTemplate="10,20,50,100"
+								emptyMessage="#{labels.kayit_bulunamadi}"
+								widgetVar="kimlikDuzeltmeKaydiWidget" reflow="true"
+								resizableColumns="true" draggableColumns="true">
+
+								<p:column headerText="#{labels.ip_dt}"
+									styleClass="subDatatableIPWidth"
+									sortBy="#{kimlikDuzeltmeKaydi.ip}">
+									<h:outputText value="#{kimlikDuzeltmeKaydi.ip}" />
+								</p:column>
+
+								<p:column headerText="#{labels.tarih_saat_dt}"
+									styleClass="subDatatableTarihSaatWidth"
+									sortBy="#{kimlikDuzeltmeKaydi.tarih_saat}">
+									<h:outputText value="#{kimlikDuzeltmeKaydi.tarih_saat}">
+										<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+									</h:outputText>
+								</p:column>
+
+								<p:column headerText="#{labels.kullanici_id_dt}"
+									styleClass="subDatatableKullaniciWidth"
+									sortBy="#{kimlikDuzeltmeKaydi.kullanici_id.ad}">
+									<h:outputText
+										value="#{kimlikDuzeltmeKaydi.kullanici_id.adSoyad}" />
+								</p:column>
+
+								<p:column headerText="#{labels.kimlik_id_dt}"
+									styleClass="subDatatableForLongValueWidth"
+									sortBy="#{kimlikDuzeltmeKaydi.kimlik_id.id}">
+									<h:outputText value="#{kimlikDuzeltmeKaydi.kimlik_id.id}" />
+								</p:column>
+
+								<p:column headerText="#{labels.aciklama_karar_dt}"
+									styleClass="subDatatableAciklamaWidth"
+									sortBy="#{kimlikDuzeltmeKaydi.aciklama_karar}">
+									<h:outputText value="#{kimlikDuzeltmeKaydi.aciklama_karar}" />
+								</p:column>
+
+								<p:column headerText="Değişiklikler">
+									<p:dataTable var="kimlikDuzeltmeKaydiVerileri"
+										value="#{kimlikDuzeltmeKaydiController.duzeltilenKolonListesiniAl(kimlikDuzeltmeKaydi)}"
+										rendered="#{kimlikDuzeltmeKaydiController.duzeltilenKolonListesiniAl(kimlikDuzeltmeKaydi).size() gt 0}">
+										<p:column headerText="Kolon Adı">
+											<h:outputText value="#{kimlikDuzeltmeKaydiVerileri.kolonAdi}" />
+										</p:column>
+										<p:column headerText="#{labels.eski_veri_dt}">
+											<h:outputText value="#{kimlikDuzeltmeKaydiVerileri.eskiVeri}" />
+										</p:column>
+										<p:column headerText="#{labels.yeni_veri_dt}">
+											<h:outputText value="#{kimlikDuzeltmeKaydiVerileri.yeniVeri}" />
+										</p:column>
+									</p:dataTable>
+								</p:column>
+							</p:dataTable>
+
+
+						</p:panel>
+
+					</h:form>
+
+				</p:dialog>
+
+
+
+				<!-- titleStyle="background-color: #ffffff; width: fit-content; color: #141d26; height: 30px; width: 80px;" -->
+				<h:form id="sdfKimlikBilgileriForm">
+					<p:accordionPanel widgetVar="basic" multiple="true">
+						<p:tab
+							title="#{sdfJsfController.kimlikDto.ad} #{sdfJsfController.kimlikDto.soyad}">
+							<p:panelGrid columns="3"
+								columnClasses="ui-g-12 ui-md-4, ui-g-12 ui-md-4 , ui-g-12 ui-md-4"
+								layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+								<p:panelGrid columns="3"
+									columnClasses="ui-g-12 ui-md-4, ui-g-12 ui-md-4, ui-g-12 ui-md-4"
+									layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+									<!--  Tablo bileşeni Uyruk -->
+									<p:outputLabel for="ulke" value="Uyruk:"
+										style="font-weight: bold; font-family: sans-serif; font-size: small; border: none; color: black; background: white; display: flex;" />
+									<p:inplace event="dblclick"
+										label="#{sdfJsfController.kimlikDto.ulke_id.ad}"
+										effectSpeed="fast"
+										styleClass="backgroundcolorTaner #{(sdfJsfController.kimlikDto.ulke_id.ad != sdfJsfController.yeniKimlikDto.ulke_id.ad) ? 'ustu-cizili' : ''}"
+										editor="true">
+										<p:autoComplete id="ulke"
+											style="color: black; background: white; width: inherit;"
+											value="#{sdfJsfController.kimlikDto.ulke_id}"
+											completeMethod="#{ulkeController.autoComplete}" var="ulke"
+											itemLabel="#{ulke.ad}" itemValue="#{ulke}"
+											inputStyle="border: none; border-style: none;"
+											converter="#{selectItemsConverter}" forceSelection="true"
+											dropdown="true" tabindex="1" autocomplete="off">
+										</p:autoComplete>
+										<p:ajax event="save"
+											listener="#{sdfJsfController.eskiVeriYeniVeriDegistir('ulke_id')}"
+											update="sdfKimlikBilgileriForm" />
+									</p:inplace>
+									<p:inplace event="dblclick"
+										label="#{sdfJsfController.yeniKimlikDto.ulke_id.ad}"
+										effectSpeed="fast" editor="true" styleClass="xdenemex"
+										rendered="#{sdfJsfController.kimlikDto.ulke_id.ad != sdfJsfController.yeniKimlikDto.ulke_id.ad}">
+										<p:autoComplete id="uyrukGizliPrime"
+											style="color: black; background: white; width: inherit;"
+											value="#{sdfJsfController.yeniKimlikDto.ulke_id}"
+											completeMethod="#{ulkeController.autoComplete}" var="ulke"
+											itemLabel="#{ulke.ad}" itemValue="#{ulke}"
+											converter="#{selectItemsConverter}" forceSelection="true"
+											required="true" dropdown="true"
+											styleClass="positionRelativeZindex"
+											inputStyleClass="backGroundWhite"
+											requiredMessage="#{hataKodlariController.hataMesajiGetir(280)}" />
+										<p:ajax event="save" update="sdfKimlikBilgileriForm" />
+									</p:inplace>
+									<h:outputText disabled="true"
+										style="border: none; display: flex;"
+										rendered="#{sdfJsfController.kimlikDto.ulke_id.ad == sdfJsfController.yeniKimlikDto.ulke_id.ad}"
+										value="" styleClass="backGroundWhite" />
+
+
+
+									<!--dropdown="false"  -->
+									<!--  Tablo bileşeni TCKN -->
+
+									<p:outputLabel for="tckn" value="TCKN:"
+										style="font-weight: bold; font-family: sans-serif; font-size: small; border: none; color: black; background: white; display: flex;" />
+									<p:inplace event="dblclick" id="tcknInplace"
+										label="#{sdfJsfController.kimlikDto.kimlik_no}"
+										effectSpeed="fast"
+										styleClass="#{(sdfJsfController.kimlikDto.kimlik_no != sdfJsfController.yeniKimlikDto.kimlik_no) ? 'ustu-cizili' : ''}"
+										editor="true">
+										<!--  onkeypress="(if(this.value.length==11) return false;"  -->
+										<p:inputText id="tckn" decimalSeparator=""
+											value="#{sdfJsfController.kimlikDto.kimlik_no}"
+											styleClass="solayaslaTaner #{(sdfJsfController.yeniKimlikDto.kimlik_no != null and sdfJsfController.yeniKimlikDto.kimlik_no != '') ? 'ustu-cizili-degil' : 'ustu-cizili'}"
+											style="text-align: left; border: none; width: inherit;"
+											inputStyle="border: none; border-style: none; text-align: left;"
+											maxlength="11" disabled="false" />
+										<p:ajax event="save"
+											listener="#{sdfJsfController.eskiVeriYeniVeriDegistir('kimlik_no')}"
+											update="sdfKimlikBilgileriForm" />
+									</p:inplace>
+									<p:inplace event="dblclick" id="tckn2Inplace"
+										label="#{sdfJsfController.yeniKimlikDto.kimlik_no}"
+										effectSpeed="fast" editor="true" styleClass="xdenemex"
+										rendered="#{sdfJsfController.kimlikDto.kimlik_no != sdfJsfController.yeniKimlikDto.kimlik_no}">
+										<!--  onkeypress="(if(this.value.length==11) return false;"-->
+										<p:inputText id="tckn2" decimalSeparator=""
+											value="#{sdfJsfController.yeniKimlikDto.kimlik_no}"
+											styleClass="kimlikSorgulaInput transformUpperCase generalHide"
+											style="text-align: left; border: none; border-style: none; color: red; display: flex;"
+											maxlength="11" disabled="false" />
+										<p:ajax event="save" update="sdfKimlikBilgileriForm" />
+									</p:inplace>
+									<h:outputText disabled="true"
+										style="border: none; display: flex;"
+										rendered="#{sdfJsfController.kimlikDto.kimlik_no == sdfJsfController.yeniKimlikDto.kimlik_no}"
+										value="" />
+
+									<!--  Tablo bileşeni Soyadı -->
+
+									<p:outputLabel for="" value="Soyadı:"
+										style="font-weight: bold; font-family: sans-serif; font-size: small; border: none; color: black; background: white; display: flex;" />
+									<p:inplace event="dblclick" id="soyadInplace"
+										label="#{sdfJsfController.kimlikDto.soyad}" effectSpeed="fast"
+										styleClass="#{(sdfJsfController.kimlikDto.soyad != sdfJsfController.yeniKimlikDto.soyad) ? 'ustu-cizili' : ''}"
+										editor="true">
+										<p:inputText id="soyad"
+											value="#{sdfJsfController.kimlikDto.soyad}"
+											class="kimlikSorgulaInput transformUpperCase"
+											styleClass="#{(sdfJsfController.yeniKimlikDto.soyad != null and sdfJsfController.yeniKimlikDto.soyad != '') ? 'ustu-cizili-degil' : 'ustu-cizili'}"
+											style="border: none; width: inherit;" />
+										<p:ajax event="save"
+											listener="#{sdfJsfController.eskiVeriYeniVeriDegistir('soyad')}"
+											update="sdfKimlikBilgileriForm" />
+									</p:inplace>
+									<p:inplace event="dblclick"
+										label="#{sdfJsfController.yeniKimlikDto.soyad}"
+										effectSpeed="fast" editor="true" styleClass="xdenemex"
+										rendered="#{sdfJsfController.kimlikDto.soyad != sdfJsfController.yeniKimlikDto.soyad}">
+										<p:inputText id="soyad2"
+											value="#{sdfJsfController.yeniKimlikDto.soyad}"
+											class="kimlikSorgulaInput transformUpperCase"
+											style="border: none; width: inherit;" />
+										<p:ajax event="save" update="sdfKimlikBilgileriForm" />
+									</p:inplace>
+									<h:outputText disabled="true"
+										style="border: none; display: flex;"
+										rendered="#{sdfJsfController.kimlikDto.soyad == sdfJsfController.yeniKimlikDto.soyad}"
+										value="" />
+
+									<!--  Tablo bileşeni Adı -->
+									<p:outputLabel for="" value="Adı:"
+										style="font-weight: bold; font-family: sans-serif; font-size: small; border: none; color: black; background: white; display: flex;" />
+									<p:inplace event="dblclick" id="adInplace"
+										label="#{sdfJsfController.kimlikDto.ad}" effectSpeed="fast"
+										styleClass="#{(sdfJsfController.kimlikDto.ad != sdfJsfController.yeniKimlikDto.ad) ? 'ustu-cizili' : ''}"
+										editor="true">
+										<p:inputText id="ad" value="#{sdfJsfController.kimlikDto.ad}"
+											class="kimlikSorgulaInput transformUpperCase"
+											styleClass="#{(sdfJsfController.yeniKimlikDto.ad != null and sdfJsfController.yeniKimlikDto.ad != '') ? 'ustu-cizili-degil' : 'ustu-cizili'}"
+											style="border: none; width: inherit;" />
+										<p:ajax event="save"
+											listener="#{sdfJsfController.eskiVeriYeniVeriDegistir('ad')}"
+											update="sdfKimlikBilgileriForm" />
+									</p:inplace>
+									<p:inplace event="dblclick"
+										label="#{sdfJsfController.yeniKimlikDto.ad}"
+										effectSpeed="fast" editor="true" styleClass="xdenemex"
+										rendered="#{sdfJsfController.kimlikDto.ad != sdfJsfController.yeniKimlikDto.ad}">
+										<p:inputText id="ad2"
+											value="#{sdfJsfController.yeniKimlikDto.ad}"
+											class="kimlikSorgulaInput transformUpperCase"
+											style="border: none; width: inherit;" />
+										<p:ajax event="save" update="sdfKimlikBilgileriForm" />
+									</p:inplace>
+									<h:outputText disabled="true"
+										style="border: none; display: flex;"
+										rendered="#{sdfJsfController.kimlikDto.ad == sdfJsfController.yeniKimlikDto.ad}"
+										value="" />
+
+								</p:panelGrid>
+								<p:panelGrid columns="3"
+									columnClasses="ui-g-12 ui-md-4, ui-g-12 ui-md-4, ui-g-12 ui-md-4"
+									layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+									<!--  Tablo bileşeni Doğum Tarihi calendar tablo -->
+
+									<p:outputLabel for="" value="Doğum Tarihi:"
+										style="font-weight: bold; font-family: sans-serif; font-size: small; border: none; color: black; background: white; display: flex;" />
+									<p:inplace event="dblclick"
+										label="#{sdfJsfController.kimlikDogumTarihiStr}"
+										effectSpeed="fast" style="width: inherit;"
+										styleClass="xpadLeft #{(sdfJsfController.kimlikDto.dogum_gunu != sdfJsfController.yeniKimlikDto.dogum_gunu or sdfJsfController.kimlikDto.dogum_ayi != sdfJsfController.yeniKimlikDto.dogum_ayi or sdfJsfController.kimlikDto.dogum_yili != sdfJsfController.yeniKimlikDto.dogum_yili ) ? 'ustu-cizili' : ''}    "
+										editor="true">
+										<p:calendar id="dogumTarihiPrime"
+											style="border: none; width: inherit;"
+											value="#{sdfJsfController.kimlikDogumTarihi}"
+											styleClass="xpadLeft backGroundWhite heightYuzde75"
+											locale="tr" pattern="dd/MM/yyyy"
+											inputStyle="border: none; border-style: none;"
+											converterMessage="#{labels.tarih_format_uyarisi}">
+										</p:calendar>
+										<p:ajax event="save"
+											listener="#{sdfJsfController.eskiVeriYeniVeriDegistir('dogum_tarihi')}"
+											update="sdfKimlikBilgileriForm" />
+									</p:inplace>
+									<p:inplace event="dblclick"
+										label="#{sdfJsfController.yeniKimlikDogumTarihiStr}"
+										effectSpeed="fast" editor="true" styleClass="xdenemex"
+										rendered="#{sdfJsfController.kimlikDto.dogum_gunu != sdfJsfController.yeniKimlikDto.dogum_gunu or sdfJsfController.kimlikDto.dogum_ayi != sdfJsfController.yeniKimlikDto.dogum_ayi or sdfJsfController.kimlikDto.dogum_yili != sdfJsfController.yeniKimlikDto.dogum_yili}">
+										<p:calendar value="#{sdfJsfController.yeniKimlikDogumTarihi}"
+											id="dogumTarihiGizliPrime" disabled="false"
+											pattern="dd/MM/yyyy" locale="tr"
+											styleClass="backGroundWhite heightYuzde75"
+											inputStyle="border: none; border-style: none;"
+											converterMessage="#{labels.tarih_format_uyarisi}"
+											style="border: none; color: red; display: flex; width: inherit;" />
+										<p:ajax event="save" update="sdfKimlikBilgileriForm" />
+									</p:inplace>
+									<h:outputText style="border: none; display: flex;"
+										rendered="#{sdfJsfController.kimlikDto.dogum_gunu == sdfJsfController.yeniKimlikDto.dogum_gunu and sdfJsfController.kimlikDto.dogum_ayi == sdfJsfController.yeniKimlikDto.dogum_ayi and sdfJsfController.kimlikDto.dogum_yili == sdfJsfController.yeniKimlikDto.dogum_yili}"
+										value="" />
+
+									<!-- Tablo bileşeni Doğum Yeri -->
+									<p:outputLabel for="" value="Doğum Yeri:" styleClass="xpadLet"
+										style="font-weight: bold; font-family: sans-serif; font-size: small; border: none; color: black; background: white; display: flex;" />
+									<p:inplace event="dblclick" id="dogumYeriInplace"
+										label="#{sdfJsfController.kimlikDto.dogum_yeri}"
+										effectSpeed="fast"
+										styleClass="xpadLeft #{(sdfJsfController.kimlikDto.dogum_yeri != sdfJsfController.yeniKimlikDto.dogum_yeri) ? 'ustu-cizili' : ''}"
+										editor="true">
+										<p:inputText id="dogumYeri"
+											value="#{sdfJsfController.kimlikDto.dogum_yeri}"
+											class="kimlikSorgulaInput transformUpperCase"
+											styleClass="#{(sdfJsfController.yeniKimlikDto.dogum_yeri != null and sdfJsfController.yeniKimlikDto.dogum_yeri != '') ? 'ustu-cizili-degil' : 'ustu-cizili'}"
+											style="border: none; width: inherit;" />
+										<p:ajax event="save"
+											listener="#{sdfJsfController.eskiVeriYeniVeriDegistir('dogum_yeri')}"
+											update="sdfKimlikBilgileriForm" />
+									</p:inplace>
+									<p:inplace event="dblclick"
+										label="#{sdfJsfController.yeniKimlikDto.dogum_yeri}"
+										effectSpeed="fast" editor="true" styleClass="xdenemex"
+										rendered="#{sdfJsfController.kimlikDto.dogum_yeri != sdfJsfController.yeniKimlikDto.dogum_yeri}">
+										<p:inputText id="dogumYeri2"
+											value="#{sdfJsfController.yeniKimlikDto.dogum_yeri}"
+											class="kimlikSorgulaInput transformUpperCase"
+											style="border: none; width: inherit;" />
+										<p:ajax event="save" update="sdfKimlikBilgileriForm" />
+									</p:inplace>
+									<h:outputText disabled="true"
+										style="border: none; display: flex;"
+										rendered="#{sdfJsfController.kimlikDto.dogum_yeri == sdfJsfController.yeniKimlikDto.dogum_yeri}"
+										value="" />
+
+									<!-- Tablo bileşeni Kayıtlı il -->
+
+
+									<p:outputLabel for="" value="Kayıtlı İl:"
+										style="font-weight: bold; font-family: sans-serif; font-size: small; border: none; color: black; background: white; display: flex;" />
+									<p:inplace event="dblclick"
+										label="#{sdfJsfController.kimlikDto.nufusa_kayitli_ilce_id.il_id.ad}"
+										effectSpeed="fast"
+										styleClass="#{(sdfJsfController.kimlikDto.nufusa_kayitli_ilce_id.il_id.ad != sdfJsfController.yeniKimlikDto.nufusa_kayitli_ilce_id.il_id.ad) ? 'ustu-cizili' : ''}"
+										editor="true">
+										<p:autoComplete id="nuKaIlPrime"
+											value="#{sdfJsfController.kimlikDto.nufusa_kayitli_ilce_id.il_id}"
+											completeMethod="#{ilController.autoComplete}" var="il"
+											itemLabel="#{il.ad}" itemValue="#{il}"
+											style="width: inherit;"
+											inputStyle="border: none; border-style: none;"
+											converter="#{selectItemsConverter}" forceSelection="true"
+											dropdown="true" styleClass="positionRelativeZindex"
+											placeholder="#{labels.seciniz}"
+											inputStyleClass="backGroundWhite" update="messages"
+											editor="true">
+										</p:autoComplete>
+										<p:ajax event="save"
+											listener="#{sdfJsfController.eskiVeriYeniVeriDegistir('il_id')}"
+											update="sdfKimlikBilgileriForm" />
+									</p:inplace>
+
+									<p:inplace event="dblclick"
+										label="#{sdfJsfController.yeniKimlikDto.nufusa_kayitli_ilce_id.il_id.ad}"
+										effectSpeed="fast" editor="true" styleClass="xdenemex"
+										rendered="#{sdfJsfController.kimlikDto.nufusa_kayitli_ilce_id.il_id.ad != sdfJsfController.yeniKimlikDto.nufusa_kayitli_ilce_id.il_id.ad}">
+										<p:autoComplete id="nuKaIlGizliPrime"
+											value="#{sdfJsfController.yeniKimlikDto.nufusa_kayitli_ilce_id.il_id}"
+											completeMethod="#{ilController.autoComplete}" var="il"
+											itemLabel="#{il.ad}" itemValue="#{il}"
+											style="width: inherit;"
+											inputStyle="border: none; border-style: none;"
+											converter="#{selectItemsConverter}" forceSelection="true"
+											dropdown="true" styleClass="positionRelativeZindex"
+											placeholder="#{labels.seciniz}"
+											inputStyleClass="backGroundWhite" update="messages"
+											editor="true" />
+										<p:ajax event="save" update="sdfKimlikBilgileriForm" />
+									</p:inplace>
+									<h:outputText disabled="true" id="nullForIl"
+										style="border: none; display: flex;"
+										rendered="#{sdfJsfController.kimlikDto.nufusa_kayitli_ilce_id.il_id.ad == sdfJsfController.yeniKimlikDto.nufusa_kayitli_ilce_id.il_id.ad}"
+										value="" />
+									<!-- Eski-Yeni -->
+
+									<!--  	<h:outputText value="Kayıtlı ilçe:"
+									style="font-weight: bold; font-family: sans-serif; font-size: small;" />
+							-->
+									<!-- Tablo bileşeni Kayıtlı İlçe -->
+									<p:outputLabel for="" value="Kayıtlı İlçe:"
+										style="font-weight: bold; font-family: sans-serif; font-size: small; border: none; color: black; background: white; display: flex;" />
+									<p:inplace event="dblclick" editor="true"
+										label="#{sdfJsfController.kimlikDto.nufusa_kayitli_ilce_id.ad}"
+										effectSpeed="fast"
+										styleClass="#{(sdfJsfController.kimlikDto.nufusa_kayitli_ilce_id.ad != sdfJsfController.yeniKimlikDto.nufusa_kayitli_ilce_id.ad) ? 'ustu-cizili' : ''}">
+										<p:autoComplete id="nuKaIlcePrime"
+											value="#{sdfJsfController.kimlikDto.nufusa_kayitli_ilce_id}"
+											completeMethod="#{ilceController.ilceleriGetir}" var="ilce"
+											itemLabel="#{ilce.ad}" itemValue="#{ilce}"
+											style="width: inherit;"
+											inputStyle="border: none; border-style: none;"
+											converter="#{selectItemsConverter}" forceSelection="true"
+											dropdown="true" styleClass="positionRelativeZindex"
+											placeholder="#{labels.seciniz}"
+											inputStyleClass="backGroundWhite" required="true">
+
+											<f:attribute name="filter"
+												value="#{sdfJsfController.kimlikDto.nufusa_kayitli_ilce_id.il_id != null ? sdfJsfController.kimlikDto.nufusa_kayitli_ilce_id.il_id : sdfJsfController.yeniKimlikDto.nufusa_kayitli_ilce_id.il_id}" />
+											<!-- 																			<p:ajax event="itemSelect" listener="#{sdfController.ilceSetle}" update="kimlikForm2:nuKaIlcePrime" /> -->
+											<!-- 																			<p:ajax event="change" listener="#{sdfController.ilceSetle}" update="kimlikForm2:nuKaIlcePrime" /> -->
+										</p:autoComplete>
+										<p:ajax event="save"
+											listener="#{sdfJsfController.eskiVeriYeniVeriDegistir('ilce_id2')}"
+											update="sdfKimlikBilgileriForm" />
+									</p:inplace>
+									<p:inplace event="dblclick" editor="true"
+										label="#{sdfJsfController.yeniKimlikDto.nufusa_kayitli_ilce_id.ad}"
+										styleClass="xdenemex"
+										rendered="#{sdfJsfController.kimlikDto.nufusa_kayitli_ilce_id.ad != sdfJsfController.yeniKimlikDto.nufusa_kayitli_ilce_id.ad}"
+										effectSpeed="fast">
+										<p:autoComplete id="nuKaIlceGizliPrime"
+											value="#{sdfJsfController.yeniKimlikDto.nufusa_kayitli_ilce_id}"
+											completeMethod="#{ilceController.ilceleriGetir}" var="ilce"
+											itemLabel="#{ilce.ad}" itemValue="#{ilce}"
+											style="width: inherit;"
+											inputStyle="border: none; border-style: none;"
+											converter="#{selectItemsConverter}" forceSelection="true"
+											dropdown="true" styleClass="positionRelativeZindex"
+											placeholder="#{labels.seciniz}"
+											inputStyleClass="backGroundWhite" required="true">
+
+											<f:attribute name="filter"
+												value="#{sdfJsfController.yeniKimlikDto.nufusa_kayitli_ilce_id.il_id}" />
+											<!-- 																			<p:ajax event="itemSelect" listener="#{sdfController.ilceSetle}" update="kimlikForm2:nuKaIlcePrime" /> -->
+											<!-- 																			<p:ajax event="change" listener="#{sdfController.ilceSetle}" update="kimlikForm2:nuKaIlcePrime" /> -->
+										</p:autoComplete>
+										<p:ajax event="save" update="sdfKimlikBilgileriForm" />
+									</p:inplace>
+									<h:outputText disabled="true"
+										style="border: none; display: flex;"
+										rendered="#{sdfJsfController.kimlikDto.nufusa_kayitli_ilce_id.ad == sdfJsfController.yeniKimlikDto.nufusa_kayitli_ilce_id.ad}"
+										value="" styleClass="backGroundWhite" />
+
+
+
+								</p:panelGrid>
+								<p:panelGrid columns="3"
+									columnClasses="ui-g-12 ui-md-4, ui-g-12 ui-md-4, ui-g-12 ui-md-4"
+									layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+
+									<!-- Tablo bileşeni Cinsiyet double click oneMenuButton -->
+									<p:outputLabel for="" value="Cinsiyet:"
+										style="font-weight: bold; font-family: sans-serif; font-size: small; border: none; color: black; background: white; display: flex;" />
+									<!-- class="label-font col-sm-3 form-group marginPadding row" -->
+									<p:inplace
+										label="#{storeController.cinsiyetStore[sdfJsfController.kimlikDto.cinsiyet-1].label}"
+										effectSpeed="fast" event="dblclick"
+										styleClass="#{(sdfJsfController.kimlikDto.cinsiyet != sdfJsfController.yeniKimlikDto.cinsiyet) ? 'ustu-cizili' : ''}"
+										style="border: none; border-style: none;" editor="true">
+										<!-- Burada kaldım -->
+										<!-- 										<p:selectOneRadio id="cinsiyet"  -->
+										<!-- 														  value="#{sdfJsfController.kimlikDto.cinsiyet}"> -->
+
+										<!-- 											<f:selectItems value="#{storeController.cinsiyetStore}"  -->
+										<!-- 														   var="c"  -->
+										<!-- 														   itemLabel="#{cinsiyet}"  -->
+										<!-- 														   itemValue="#{cinsiyet}"/> -->
+										<!-- 										</p:selectOneRadio> -->
+										<p:selectOneMenu id="cinsiyet"
+											style="border: none; border-style: none; width: 150px;"
+											value="#{sdfJsfController.kimlikDto.cinsiyet}">
+											<f:selectItems value="#{storeController.cinsiyetStore}"
+												itemLabel="#{storeController.cinsiyetStore[sdfJsfController.kimlikDto.cinsiyet-1].label}" />
+
+										</p:selectOneMenu>
+										<p:ajax event="save"
+											listener="#{sdfJsfController.eskiVeriYeniVeriDegistir('cinsiyet')}"
+											update="sdfKimlikBilgileriForm" />
+									</p:inplace>
+
+									<p:inplace event="dblclick"
+										label="#{storeController.cinsiyetStore[sdfJsfController.yeniKimlikDto.cinsiyet-1].label}"
+										effectSpeed="fast" editor="true" styleClass="xdenemex"
+										rendered="#{sdfJsfController.kimlikDto.cinsiyet != sdfJsfController.yeniKimlikDto.cinsiyet}">
+										<p:selectOneMenu id="cinsiyetGizli"
+											style="border: none; border-style: none; width: 150px;"
+											value="#{sdfJsfController.yeniKimlikDto.cinsiyet}">
+											<f:selectItems value="#{storeController.cinsiyetStore}"
+												itemLabel="#{storeController.cinsiyetStore[sdfJsfController.yeniKimlikDto.cinsiyet-1].label}" />
+
+										</p:selectOneMenu>
+										<p:ajax event="save" update="sdfKimlikBilgileriForm" />
+									</p:inplace>
+									<h:outputText disabled="true"
+										style="border: none; display: flex;"
+										rendered="#{sdfJsfController.kimlikDto.cinsiyet == sdfJsfController.yeniKimlikDto.cinsiyet}"
+										value="" />
+
+
+									<!-- Tablo bileşeni Baba Adı -->
+									<p:outputLabel for="" value="Baba Adı:"
+										style="font-weight: bold; font-family: sans-serif; font-size: small; border: none; color: black; background: white; display: flex;" />
+									<p:inplace event="dblclick" id="babaAdıInplace"
+										label="#{sdfJsfController.kimlikDto.baba_adi}"
+										effectSpeed="fast"
+										styleClass="#{(sdfJsfController.kimlikDto.baba_adi != sdfJsfController.yeniKimlikDto.baba_adi) ? 'ustu-cizili' : ''}"
+										editor="true">
+										<p:inputText id="babaAdi"
+											value="#{sdfJsfController.kimlikDto.baba_adi}"
+											class="kimlikSorgulaInput transformUpperCase"
+											styleClass="#{(sdfJsfController.yeniKimlikDto.baba_adi != null and sdfJsfController.yeniKimlikDto.baba_adi != '') ? 'ustu-cizili-degil' : 'ustu-cizili'}"
+											style="border: none; width: inherit;" />
+										<p:ajax event="save"
+											listener="#{sdfJsfController.eskiVeriYeniVeriDegistir('baba_adi')}"
+											update="sdfKimlikBilgileriForm" />
+									</p:inplace>
+									<p:inplace event="dblclick"
+										label="#{sdfJsfController.yeniKimlikDto.baba_adi}"
+										effectSpeed="fast" editor="true" styleClass="xdenemex"
+										rendered="#{sdfJsfController.kimlikDto.baba_adi != sdfJsfController.yeniKimlikDto.baba_adi}">
+										<p:inputText id="babaAdi2"
+											value="#{sdfJsfController.yeniKimlikDto.baba_adi}"
+											class="kimlikSorgulaInput transformUpperCase"
+											style="border: none; width: inherit;" />
+										<p:ajax event="save" update="sdfKimlikBilgileriForm" />
+									</p:inplace>
+									<h:outputText disabled="true"
+										style="border: none; display: flex;"
+										rendered="#{sdfJsfController.kimlikDto.baba_adi == sdfJsfController.yeniKimlikDto.baba_adi}"
+										value="" />
+
+									<!-- Tablo bileşeni Ana Adı -->
+									<p:outputLabel for="" value="Ana Adı:"
+										style="font-weight: bold; font-family: sans-serif; font-size: small; border: none; color: black; background: white; display: flex;" />
+									<p:inplace event="dblclick" id="anaAdıInplace"
+										label="#{sdfJsfController.kimlikDto.ana_adi}"
+										effectSpeed="fast"
+										styleClass="#{(sdfJsfController.kimlikDto.ana_adi != sdfJsfController.yeniKimlikDto.ana_adi) ? 'ustu-cizili' : ''}"
+										editor="true">
+										<p:inputText id="anaAdi"
+											value="#{sdfJsfController.kimlikDto.ana_adi}"
+											class="kimlikSorgulaInput transformUpperCase"
+											styleClass="#{(sdfJsfController.yeniKimlikDto.ana_adi != null and sdfJsfController.yeniKimlikDto.ana_adi != '') ? 'ustu-cizili-degil' : 'ustu-cizili'}"
+											style="border: none; width: inherit;" />
+										<p:ajax event="save"
+											listener="#{sdfJsfController.eskiVeriYeniVeriDegistir('ana_adi')}"
+											update="sdfKimlikBilgileriForm" />
+									</p:inplace>
+									<p:inplace event="dblclick"
+										label="#{sdfJsfController.yeniKimlikDto.ana_adi}"
+										effectSpeed="fast" editor="true" styleClass="xdenemex"
+										rendered="#{sdfJsfController.kimlikDto.ana_adi != sdfJsfController.yeniKimlikDto.ana_adi}">
+										<p:inputText id="anaAdi2"
+											value="#{sdfJsfController.yeniKimlikDto.ana_adi}"
+											class="kimlikSorgulaInput transformUpperCase"
+											style="border: none; width: inherit;" />
+										<p:ajax event="save" update="sdfKimlikBilgileriForm" />
+									</p:inplace>
+									<h:outputText disabled="true"
+										style="border: none; display: flex;"
+										rendered="#{sdfJsfController.kimlikDto.ana_adi == sdfJsfController.yeniKimlikDto.ana_adi}"
+										value="" />
+
+
+									<!-- 									<h:outputText value="#{sdfJsfController.yeniKimlikDto.ana_adi}" -->
+									<!-- 										id="anaAdiGizli" disabled="true" -->
+									<!-- 										class="kimlikSorgulaInputGizli transformUpperCase generalHide" -->
+									<!-- 										style="border: none; color: red; display: flex;" -->
+									<!-- 										rendered="#{sdfJsfController.kimlikDto.ana_adi != sdfJsfController.yeniKimlikDto.ana_adi}" /> -->
+
+									<!-- Tablo bileşeni Köy/Mahalle -->
+									<p:outputLabel for="" value="Köy/Mahalle:"
+										style="font-weight: bold; font-family: sans-serif; font-size: small; border: none; color: black; background: white; display: flex;" />
+									<p:inplace event="dblclick" id="mahalleInplace"
+										label="#{sdfJsfController.kimlikDto.mahalle}"
+										effectSpeed="fast"
+										styleClass="#{(sdfJsfController.kimlikDto.mahalle != sdfJsfController.yeniKimlikDto.mahalle) ? 'ustu-cizili' : ''}"
+										editor="true">
+										<p:inputText id="mahalleKöy"
+											value="#{sdfJsfController.kimlikDto.mahalle}"
+											class="kimlikSorgulaInput transformUpperCase"
+											styleClass="#{(sdfJsfController.yeniKimlikDto.mahalle != null and sdfJsfController.yeniKimlikDto.mahalle != '') ? 'ustu-cizili-degil' : 'ustu-cizili'}"
+											style="border: none; width: inherit;" />
+										<p:ajax event="save"
+											listener="#{sdfJsfController.eskiVeriYeniVeriDegistir('mahalle')}"
+											update="sdfKimlikBilgileriForm" />
+									</p:inplace>
+									<p:inplace event="dblclick"
+										label="#{sdfJsfController.yeniKimlikDto.mahalle}"
+										effectSpeed="fast" editor="true" styleClass="xdenemex"
+										rendered="#{sdfJsfController.kimlikDto.mahalle != sdfJsfController.yeniKimlikDto.mahalle}">
+										<p:inputText id="mahalleKöy2"
+											value="#{sdfJsfController.yeniKimlikDto.mahalle}"
+											class="kimlikSorgulaInput transformUpperCase"
+											style="border: none; width: inherit;" />
+										<p:ajax event="save" update="sdfKimlikBilgileriForm" />
+									</p:inplace>
+									<h:outputText disabled="true"
+										style="border: none; display: flex;"
+										rendered="#{sdfJsfController.kimlikDto.mahalle == sdfJsfController.yeniKimlikDto.mahalle}"
+										value="" />
+
+								</p:panelGrid>
+							</p:panelGrid>
+
+						</p:tab>
+					</p:accordionPanel>
+				</h:form>
+			</div>
+
+
+
+			<div class="container" style="background-color: white;">
+
+
+				<h:form styleClass="ui-button-outlined ui-button-secondary">
+					<h:form>
+						<p:menuButton value="Öneri"
+							styleClass="ui-button-outlined ui-button-secondary"
+							style="margin:2px">
+							<p:menuitem value="Eşleşme Önerisi" />
+							<p:menuitem value="Arşiv Önerisi" />
+							<p:menuitem value="Tali Motor Öneri" />
+							<p:menuitem value="Silme Öneri" />
+						</p:menuButton>
+					</h:form>
+
+
+
+
+					<h:form>
+						<p:menuButton value="Sırala"
+							styleClass="ui-button-outlined ui-button-secondary"
+							style="margin:2px">
+							<p:menuitem value="Suç Tarihi" />
+							<p:menuitem value="Karar Tarihi" />
+							<p:menuitem value="Esas No" />
+							<p:menuitem value="Karar No" />
+							<p:menuitem value="Mahkeme" />
+							<p:menuitem valeu="Kesinleşme Tarihi" />
+						</p:menuButton>
+					</h:form>
+
+
+
+					<h:form>
+						<p:menuButton value="2.Sırala"
+							styleClass="ui-button-outlined ui-button-secondary"
+							style="margin:2px">
+							<p:menuitem value="Suç Tarihi" />
+							<p:menuitem value="Karar Tarihi" />
+							<p:menuitem value="Esas No" />
+							<p:menuitem value="Karar No" />
+							<p:menuitem value="Mahkeme" />
+							<p:menuitem valeu="Kesinleşme Tarihi" />
+						</p:menuButton>
+					</h:form>
+
+
+
+					<h:form>
+						<p:commandButton type="Button" value="Ön İzleme"
+							styleClass="ui-button-outlined ui-button-secondary"
+							style="margin:2px" />
+
+					</h:form>
+
+
+
+					<h:form>
+						<p:commandButton type="Button" value="Fiş Notları"
+							styleClass="ui-button-outlined ui-button-secondary"
+							style="margin:2px" />
+
+					</h:form>
+
+
+
+					<h:form>
+						<p:commandButton type="Button" value="Tek Seçim"
+							styleClass="ui-button-outlined ui-button-secondary"
+							style="margin:2px" />
+
+					</h:form>
+
+
+
+					<h:form>
+						<p:menuButton value="Yeni Fiş Ekle"
+							styleClass="ui-button-outlined ui-button-secondary"
+							style="margin:2px">
+							<p:menuitem value="Ceza Fişi Ekle" />
+							<p:menuitem value="Tali Karar Fişi Ekle" />
+							<p:menuitem value="Yerine Getirme Fişi Ekle" />
+							<p:menuitem value="Yabancı Fiş Ekle" />
+						</p:menuButton>
+					</h:form>
+
+
+
+					<h:form>
+						<p:commandButton type="Button" value="Reset"
+							styleClass="ui-button-outlined ui-button-secondary"
+							style="margin:2px" />
+
+					</h:form>
+
+
+
+					<h:form>
+						<p:commandButton type="Button"
+							styleClass="ui-button-outlined ui-button-secondary"
+							value="Tüm SDF'ler" style="margin:2px" />
+					</h:form>
+
+
+
+					<h:form>
+						<p:commandButton type="Button"
+							styleClass="ui-button-outlined ui-button-secondary"
+							value="Fiş Silme/Taşı" style="margin:2px" />
+					</h:form>
+
+					<!-- 	<div>
+			
+			 	<h:form>
+				
+				<p:inplace event="dblclick"
+									label="#{sdfJsfController.kimlikDto.ulke_id.ad}"
+									effectSpeed="fast"
+									editor="true"
+									
+									>
+									
+									<p:autoComplete id="ulke2"
+										value="#{sdfJsfController.kimlikDto.ulke_id}"
+										completeMethod="#{ulkeController.autoComplete}" var="ulke"
+										itemLabel="#{ulke.ad}" itemValue="#{ulke}"
+										inputStyle="border: none; border-style: none;"
+										converter="#{selectItemsConverter}" forceSelection="true"
+										dropdown="true" tabindex="1" autocomplete="off">
+									</p:autoComplete>
+								</p:inplace>
+				
+				</h:form>
+			
+			</div>
+			-->
+				</h:form>
+
+			</div>
+		</div>
+
+
+		<link rel="stylesheet" href="css/tcss.css" />
+		<link rel="stylesheet" href="/css/sdf.css" />
+
+
+	</ui:define>
+</ui:composition>
